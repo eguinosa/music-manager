@@ -1,3 +1,8 @@
+# Music Library Testing Files:
+library/
+
+# Virtual Environment of the Project:
+venv-music-manager/
 
 # MacOS File System
 .DS_Store
