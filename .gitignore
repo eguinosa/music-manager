@@ -1,5 +1,6 @@
 # Music Library Testing Files:
 library/
+*.mp3
 
 # Virtual Environment of the Project:
 venv-music-manager/
