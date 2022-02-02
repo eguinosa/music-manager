@@ -2,7 +2,7 @@
 # 01-Feb-2021
 
 import eyed3
-from unidecode import unidecode_expect_nonascii
+from unidecode import unidecode, unidecode_expect_nonascii
 from os import rename, listdir
 from os.path import join, isfile, basename, dirname
 
@@ -56,14 +56,49 @@ def filenames_to_ascii(filepaths):
     return final_filepaths
 
 
+def tags_to_ascii(filepaths):
+    """
+    Receives a list of mp3 files (by their paths) and updates all their tags, so
+    that name of the Artists, Album, Genre, etc. use only ASCII characters.
+    
+    It also removes some unnecessary information like composer or comments. This is
+    a program to automate the proccess to add music to my Garmin Watch, so I
+    don't need a whole lot of details about the track.
+    """
+    # Iterate though all the music files and update their tags.
+    for filepath in filepaths:
+        audiofile = eyed3.load(filepath)
+        songtag = audiofile.tag
+        songtag.title = unidecode(songtag.title)
+        songtag.artist = unidecode(songtag.artist)
+        songtag.album = unidecode(songtag.album)
+        songtag.album_artist = unidecode(songtag.album_artist)
+        songtag.comments.set("Music for Gelin's Garmin Watch.")
+        songtag.save()
+
+
+
 if __name__ == '__main__':
     # # Test 'mp3s_lisdir'
     # filepaths = mp3s_listdir("library/apple_music")
     # for filepath in filepaths:
     #     print(basename(filepath))
 
-    # Test 'filenames_to_ascii'
+    # # Test 'filenames_to_ascii'
+    # filepaths = mp3s_listdir("library/apple_music")
+    # new_filepaths = filenames_to_ascii(filepaths)
+    # for i in range(0, len(filepaths)):
+    #     print(f"{i}: [{basename(filepaths[i])}] -> [{basename(new_filepaths[i])}]")
+
+    # # Test eyed3
+    # audiofile = eyed3.load('song.mp3')
+    # current_artist = audiofile.tag.artist
+    # new_artist  = unidecode(current_artist)
+    # audiofile.tag.artist = "Fiesta"
+    # audiofile.tag.save()
+    # print(f"{current_artist} -> {new_artist}")
+    
+    # Test 'tags_to_ascii'
     filepaths = mp3s_listdir("library/apple_music")
     new_filepaths = filenames_to_ascii(filepaths)
-    for i in range(0, len(filepaths)):
-        print(f"{i}: [{basename(filepaths[i])}] -> [{basename(new_filepaths[i])}]")
+    tags_to_ascii(new_filepaths)
