@@ -66,25 +66,6 @@ def library_explorer(library_dirpath):
 
 
 if __name__ == '__main__':
-    # # Test - playlist_maker.
-    # files = ['01 Tusa.mp3', '02 La Curiosidad.mp3', '03 La Jeepeta (Remix).mp3',
-    #          '04 Hawai.mp3', '05 Djadja (feat. Maluma) (Remix).mp3',]
-    # playlist = 'Exitos Latinos'
-    # folder = ''  # This folder
-    # playlist_maker(files, playlist, folder)
-
-    # # Test - Command Line Arguments.
-    # if len(sys.argv) == 2:
-    #     library_folder = sys.argv[1]
-    #     if isdir(library_folder):
-    #         print("BIEN!! El argumento especificado es una carpeta.")
-    #     else:
-    #         print("MUY MAL!!! El argumento no es una carpeta!")
-    # else:
-    #     print("El programa tiene que recibir un argumento especificando la "
-    #           "ubicacion de la Libreria de musica.")
-
-    # Final Product:
     # Check we are receiving the proper amount of arguments.
     if len(sys.argv) != 2:
         print("\nERROR!")
