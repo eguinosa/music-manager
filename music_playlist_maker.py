@@ -66,6 +66,9 @@ def library_explorer(library_dirpath):
 
 
 if __name__ == '__main__':
+    # This program receives the path to Music Library Folder, and creates
+    # a playlist for each folder with music it finds inside.
+
     # Check we are receiving the proper amount of arguments.
     if len(sys.argv) != 2:
         print("\nERROR!")

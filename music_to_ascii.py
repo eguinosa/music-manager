@@ -1,10 +1,11 @@
 # Gelin Eguinosa Rosique
 # 01-Feb-2021
 
+import sys
 import eyed3
 from unidecode import unidecode, unidecode_expect_nonascii
 from os import rename, listdir
-from os.path import join, isfile, basename, dirname
+from os.path import join, isdir, isfile, basename, dirname
 
 
 def mp3s_listdir(directory_path):
@@ -98,7 +99,34 @@ if __name__ == '__main__':
     # audiofile.tag.save()
     # print(f"{current_artist} -> {new_artist}")
     
-    # Test 'tags_to_ascii'
-    filepaths = mp3s_listdir("library/apple_music")
+    # # Test 'tags_to_ascii'
+    # filepaths = mp3s_listdir("library/apple_music")
+    # new_filepaths = filenames_to_ascii(filepaths)
+    # tags_to_ascii(new_filepaths)
+
+    # Check we are receiving the proper amount of arguments.
+    if len(sys.argv) != 2:
+        print("\nERROR!")
+        print("The program receives one argument indicating the location of",
+              "the Music files to transform to ASCII.\n")
+        exit()
+    
+    # Check the argument is a folder.
+    library_path = sys.argv[1]
+    if not isdir(library_path):
+        print("\nERROR!")
+        print("The given path is not a folder.\n")
+        exit()
+
+    # Make sure the name is in ASCII.
+    foldername = basename(library_path)
+    if not foldername.isascii():
+        new_foldername = unidecode_expect_nonascii(foldername)
+        new_libray_path = join(dirname(library_path), new_foldername)
+        rename(library_path, new_libray_path)
+        library_path = new_libray_path
+    
+    # Transform the music file names and their metadata to ASCII.
+    filepaths = mp3s_listdir(library_path)
     new_filepaths = filenames_to_ascii(filepaths)
     tags_to_ascii(new_filepaths)
